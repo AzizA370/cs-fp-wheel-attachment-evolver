@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join('..')))
 # import the module to be unit tested
 import modules.sim_tools as sim_tools
 
+# import relevant modules
 import unittest 
 
 class SimToolsTest (unittest.TestCase):

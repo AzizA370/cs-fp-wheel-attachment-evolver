@@ -7,9 +7,9 @@ sys.path.append(os.path.abspath(os.path.join('..')))
 
 # import the module to be unit tested
 import modules.attachment as attachment
+
+# import relevant modules
 import modules.genome as genome
-
-
 import unittest 
 import numpy as np
 

@@ -7,9 +7,10 @@ sys.path.append(os.path.abspath(os.path.join('..')))
 
 # import the module to be unit tested
 import modules.simulation as simulation
+
+# import relevant modules
 import modules.attachment as attachment
 import modules.genome as genome
-
 import unittest 
 
 class SimulationTest (unittest.TestCase):

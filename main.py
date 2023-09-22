@@ -8,6 +8,7 @@ import modules.genome as genome
 import modules.attachment as attachment
 import modules.population as population
 import modules.simulation as simulation
+import modules.analyser as analyser
 
 # import other helpful modules
 import numpy as np

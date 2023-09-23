@@ -24,22 +24,22 @@ class Simulation():
         self.width, self.height = 1500, 800
         
         # initialise the window/surface object
-        self.window = pygame.display.set_mode((self.width, self.height))
+        # self.window = pygame.display.set_mode((self.width, self.height))
 
     # method to run a wheel individual through the simulation
     def run_wheel(self, attachment, speed=0.0, iterations=2900):
         try:
             run = True
-            clock = pygame.time.Clock()
+            # clock = pygame.time.Clock()
             
             # set simulation step value - prefered engine value (pymunk docs)
             dt = 0.01
 
             # set visuls frame per second based on sim steps for consistency
-            fps = 1/dt
+            # fps = 1/dt
 
             # set up rendering the physics sim (visual render)
-            draw_options = pymunk.pygame_util.DrawOptions(self.window)
+            # draw_options = pymunk.pygame_util.DrawOptions(self.window)
             
             # Establish & Setup the simulation environment:
             # setup a pymunk physcis space
@@ -64,13 +64,13 @@ class Simulation():
                 if run is True: # manual shutoff
                 
                     # render visuals
-                    self.draw(self.window, space, draw_options)
+                    # self.draw(self.window, space, draw_options)
                     
                     # step the physics sim
                     space.step(dt)
 
                     # step visual frames
-                    clock.tick(fps)
+                    # clock.tick(fps)
 
                     # update vehicle's position as the sim runs
                     attachment.update_position(vehicle_body.position)
@@ -83,7 +83,7 @@ class Simulation():
                             break
             
             # shutoff the rendere   
-            pygame.quit()
+            # pygame.quit()
         except:
             print("sim failed to run vehicle, Vertex Count: (Couldn't assign siblings)", len(wheel_specs['attachment_a']['vertices']))
 

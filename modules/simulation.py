@@ -49,7 +49,7 @@ class Simulation():
             # add the boundries
             sim_tools.SimTools.create_boundries(space, self.width, self.height)
             # add stairs
-            sim_tools.SimTools.create_stairs(space, 600, 1500, self.height, 60, 70)
+            sim_tools.SimTools.create_stairs(space, 600, 99999, self.height, 60, 80)
             
             # Introduce individual to physics space
             # Get vehicle specs 

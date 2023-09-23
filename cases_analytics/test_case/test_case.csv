@@ -1,4 +1,2 @@
-gen_num,min_dist,max_dist,mean_dist,mean_dist_change,mean_verts
+gen_num,min_dist,max_dist,mean_dist,mean_dist_change,mean_verts,elite_dna
 0,10,30,20.0,0,10.0
-1,14,40,25.333,5.33,9.0
-2,6,55,26.0,0.67,10.0

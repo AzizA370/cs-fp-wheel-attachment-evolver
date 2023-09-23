@@ -39,19 +39,25 @@ def main():
                     sim = simulation.Simulation()
 
                     # run vehicle individual through simulation
-                    sim.run_wheel(attachm, speed=1.5, iterations=500)
+                    sim.run_wheel(attachm, speed=2.0, iterations=2900)
 
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 
                         for attachm in pop.attachments]
-                # print('Gen'+str(gen)+':', fits, 'Avg Fitness:', np.mean(fits),'\n')
 
+                # identify best performer (elite individual)
+                max_fit = np.max(fits)
+                for attachm in pop.attachments:
+                    if attachm.get_dist_travelled() == max_fit:
+                        elite_dna = attachm.dna
+                        break
+
+                # number of vertices per individual
                 attachms_vert_num = [len(attachm.dna) 
                                         for attachm in pop.attachments]
-                # print('attachment vertices num', attachms_vert_num)
 
-                # store run data in the analyser
-                anl.store_gen_data(fits, attachms_vert_num)
+                # store run data in the analyser per generation
+                anl.store_gen_data(fits, attachms_vert_num, elite_dna)
 
                 # new list to store new generation of vehicles
                 new_attachmens = []
@@ -98,7 +104,7 @@ def main():
                     # add attachment to new_attachments list
                     new_attachmens.append(new_attachment)
 
-                # elitism- keep best in generation in population and in .csv
+                # elitism - keep best in generation in population and in .csv
                 max_fit = np.max(fits)
                 for attachm in pop.attachments:
                     if attachm.get_dist_travelled() == max_fit:
@@ -108,9 +114,6 @@ def main():
                         new_attachment.update_dna(attachm.dna)
                         # add vehicle to new_vehicles list
                         new_attachmens[0] = new_attachment
-                        # export elite's dna construct to local storage
-                        file_name = 'elites-dna-csv/elite_Gen'+str(gen)+'.csv'
-                        genome.Genome.to_csv(attachm.dna, file_name)
                         break
                 
                 # update population with new generation of vehicles

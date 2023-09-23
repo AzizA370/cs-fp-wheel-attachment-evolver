@@ -138,16 +138,16 @@ class GenomeTest (unittest.TestCase):
         new_genome = genome.Genome.invert_mutate(g1, 1, subset_prop)
         self.assertEqual(len(g1), len(new_genome))
 
-    def test_to_CSV_exists(self):
+    def test_to_csv_exists(self):
         self.assertIsNotNone(genome.Genome.to_csv)
 
-    def test_to_CSV_generates_file(self):
+    def test_to_csv_generates_file(self):
         g1 = [[1,2,3], [4,5,6]]
         file_path = 'test_CSVs/test1.csv'
         genome.Genome.to_csv(g1, file_path)
         self.assertTrue(os.path.exists(file_path))
 
-    def test_to_CSV_output_content(self):
+    def test_to_csv_output_content(self):
         g1 = [[1,2,3], [4,5,6], [7, 8, 9]]
         file_path = 'test_CSVs/test2.csv'
         genome.Genome.to_csv(g1, file_path)
@@ -156,17 +156,17 @@ class GenomeTest (unittest.TestCase):
             csv_str = f.read() 
         self.assertEqual(csv_str, expected_content)
 
-    def test_from_CSV_exists(self):
+    def test_from_csv_exists(self):
         self.assertIsNotNone(genome.Genome.from_csv)
 
-    def test_from_CSV_input(self):
+    def test_from_csv_input(self):
         g1 = [[1,2,3]]
         file_path = 'test_CSVs/test3.csv'
         genome.Genome.to_csv(g1, file_path)
         g2 = genome.Genome.from_csv(file_path)
         self.assertTrue(np.array_equal(g1, g2))
 
-    def test_from_CSV_input_long(self):
+    def test_from_csv_input_long(self):
         g1 = [[1,2,3], [4,5,6], [7, 8, 9]]
         file_path = 'test_CSVs/test4.csv'
         genome.Genome.to_csv(g1, file_path)

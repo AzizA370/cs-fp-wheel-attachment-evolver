@@ -19,44 +19,61 @@ class AttachmentTest (unittest.TestCase):
         anl = analyser.Analyser()
         self.assertIsNotNone(anl.ga_run_cases)
     
-    def test_has_store_gen_data(self):
+    def test_store_gen_data_exists(self):
         self.assertIsNotNone(analyser.Analyser.store_gen_data)
     
     def test_store_data_local_storage(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 15, 15])
+        anl.store_gen_data([10, 20, 30], [15, 15, 15])
         self.assertGreater(len(anl.case_run_data), 0)
 
     def test_store_data_calcs_min_fit(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 15, 15])
+        anl.store_gen_data([10, 20, 30], [15, 15, 15])
         self.assertEqual(anl.case_run_data[0]['case_name'], 'test')
 
     def test_store_data_calcs_min_fit(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 15, 15])
+        anl.store_gen_data([10, 20, 30], [15, 15, 15])
         self.assertEqual(anl.case_run_data[0]['min_dist'], 10)
 
     def test_store_data_calcs_max_fit(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 15, 15])
+        anl.store_gen_data([10, 20, 30], [15, 15, 15])
         self.assertEqual(anl.case_run_data[0]['max_dist'], 30)
 
     def test_store_data_calcs_mean_fit(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 15, 15])
+        anl.store_gen_data([10, 20, 30], [15, 15, 15])
         self.assertEqual(anl.case_run_data[0]['mean_dist'], 20)
 
     def test_store_data_calcs_verts(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 7, 8])
+        anl.store_gen_data([10, 20, 30], [15, 7, 8])
         self.assertEqual(anl.case_run_data[0]['mean_verts'], 10)
 
     def test_store_data_sets_gen_num(self):
         anl = analyser.Analyser()
-        anl.store_gen_data('test', [10, 20, 30], [15, 7, 8])
-        anl.store_gen_data('test', [14, 40, 22], [9, 7, 12])
-        anl.store_gen_data('test', [6, 55, 17], [13, 8, 8])
+        anl.store_gen_data([10, 20, 30], [15, 7, 8])
+        anl.store_gen_data([14, 40, 22], [9, 7, 12])
+        anl.store_gen_data([6, 55, 17], [13, 8, 8])
         self.assertEqual(anl.case_run_data[-1]['gen_num'], len(anl.case_run_data)-1)
+
+    def test_process_case_data_exists(self):
+        self.assertIsNotNone(analyser.Analyser.process_case_data)
+
+
+
+
+    def test_create_case_csv_exists(self):
+        self.assertIsNotNone(analyser.Analyser.create_case_csv)
+
+    def test_create_case_csv_output(self):
+        anl = analyser.Analyser()
+        anl.store_gen_data([10, 20, 30], [15, 7, 8])
+        anl.store_gen_data([14, 40, 22], [9, 7, 12])
+        anl.store_gen_data([6, 55, 17], [13, 8, 8])
+        anl.create_case_csv('../cases_analytics/test_case')
+        self.assertEqual(1, 1)
 
 unittest.main()

@@ -44,15 +44,15 @@ def main():
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 
                         for attachm in pop.attachments]
-                print('Gen'+str(gen)+':', fits, 'Avg Fitness:', np.mean(fits),'\n')
+                # print('Gen'+str(gen)+':', fits, 'Avg Fitness:', np.mean(fits),'\n')
 
                 attachms_vert_num = [len(attachm.dna) 
                                         for attachm in pop.attachments]
-                print('attachment vertices num', attachms_vert_num)
+                # print('attachment vertices num', attachms_vert_num)
 
                 # store run data in the analyser
-                anl.store_gen_data(case['case_name'], fits, attachms_vert_num)
-                print(anl.case_run_data)
+                anl.store_gen_data(fits, attachms_vert_num)
+
                 # new list to store new generation of vehicles
                 new_attachmens = []
 
@@ -117,8 +117,7 @@ def main():
                 pop.attachments = new_attachmens
             
             # generate case stats & analytics
-            # anl.
-            print('END of CASE, Genrating Stats..')
+            anl.process_case_data(case['case_name'])
 
 if __name__ == "__main__":
          main()

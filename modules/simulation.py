@@ -1,7 +1,6 @@
 # Class: simulation - stateful
 # an environment to assess performance of an individual
 # =========================================
-# one Sim One Vehicle ---> Mult. Sims Mult. Vehicles
 
 # import simulation tools
 import modules.sim_tools as sim_tools

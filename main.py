@@ -17,6 +17,7 @@ import os
 
 def main():
 
+        # pass json when instantiating analyser - single control point
         # instantiate an analyser object
         anl = analyser.Analyser()
         # store preset ga run cases
@@ -24,40 +25,51 @@ def main():
 
         # run GA for each preset case
         for case in run_cases:
+            
+            # CLI RUN MESSAGE
+            print('\nCase: '+case['case_name'],
+                    '- loading case specification\n')
+
             # establish a population based on case specs,
             # instantiates & contains stateful vehicle objects
             pop = population.Population(case['pop_size'], gene_count=case['gene_count'])
+            
+            # CLI RUN MESSAGE
+            print('Case: '+case['case_name'],
+                    '- initialising population\n')
 
             # run GA for number of generation
-            for gen in range(case['gen_num']):
+            for gen_num in range(case['gen_num']):
 
                 # Establish sim to run population:
                 # run/evaluate each individual in the population through the simulation
-                for attachm in pop.attachments:
-
+                for sim_ind in range(len(pop.attachments)):
+                    attachm = pop.attachments[sim_ind]
                     # instantiate a new simulation
                     sim = simulation.Simulation()
 
+                    # CLI RUN MESSAGE
+                    print('Case: '+case['case_name'],
+                    '- evaluating Indiv# '+str(sim_ind) +'/'+str(len(pop.attachments)-1)
+                    +' - '+'Gen# '+str(gen_num)+'/'+str(case['gen_num']-1))
+
                     # run vehicle individual through simulation
-                    sim.run_wheel(attachm, speed=2.0, iterations=2900)
+                    sim.run_wheel(attachm, speed=2.0, iterations=400)
 
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 
                         for attachm in pop.attachments]
 
-                # identify best performer (elite individual)
-                max_fit = np.max(fits)
-                for attachm in pop.attachments:
-                    if attachm.get_dist_travelled() == max_fit:
-                        elite_dna = attachm.dna
-                        break
+                # # identify best performer (elite individual)
+                # max_fit = np.max(fits)
+                # for attachm in pop.attachments:
+                #     if attachm.get_dist_travelled() == max_fit:
+                #         elite_dna = attachm.dna
+                #         break
 
                 # number of vertices per individual
                 attachms_vert_num = [len(attachm.dna) 
                                         for attachm in pop.attachments]
-
-                # store run data in the analyser per generation
-                anl.store_gen_data(fits, attachms_vert_num, elite_dna)
 
                 # new list to store new generation of vehicles
                 new_attachmens = []
@@ -65,10 +77,14 @@ def main():
                 # create the fitness map - used to dictate bred parents via roulette wheel selection
                 fit_map = population.Population.get_fitness_map(fits)
                 
-                # >> Breeding
+                # CLI RUN MESSAGE
+                print('\nCase: '+case['case_name'], 
+                '- applying crossover & mutation to population individuals')
+
                 # select 2 parents for each vehicle in the evaluated population and breed them
                 for i in range(len(pop.attachments)):
-                    # //////////Breeding & Mutation
+                    
+                    # Crossover & Mutation:
                     # select first parent
                     parent_a_index = population.Population.select_parent(fit_map)
                     # select second parent
@@ -104,23 +120,43 @@ def main():
                     # add attachment to new_attachments list
                     new_attachmens.append(new_attachment)
 
-                # elitism - keep best in generation in population and in .csv
+                # CLI RUN MESSAGE
+                print('Case: '+case['case_name'], '- setting elites of next generation')
+
+                # elitism - identify and keep best performer in the popultion
                 max_fit = np.max(fits)
                 for attachm in pop.attachments:
                     if attachm.get_dist_travelled() == max_fit:
+                        elite_dna = attachm.dna
                         # instantaie a new vehicle object
                         new_attachment = attachment.Attachment(1)
                         # set its dna to be the bred/mutated dna
-                        new_attachment.update_dna(attachm.dna)
+                        new_attachment.update_dna(elite_dna)
                         # add vehicle to new_vehicles list
                         new_attachmens[0] = new_attachment
                         break
                 
+                # store run data in the analyser per generation
+                anl.store_gen_data(fits, attachms_vert_num, elite_dna)
+
+
+                # CLI RUN MESSAGE
+                print('Case: '+case['case_name'], 
+                '- updating population with next generation indviduals.\n')
+
                 # update population with new generation of vehicles
                 pop.attachments = new_attachmens
             
+            # CLI RUN MESSAGE
+            print('Case: '+case['case_name'], 
+            '- generating case analytics..\n')
+
             # generate case stats & analytics
             anl.process_case_data(case['case_name'])
+
+            # CLI RUN MESSAGE
+            print('Case: '+case['case_name'], 
+            '- evolution and anlysis complete.\n')
 
 if __name__ == "__main__":
          main()

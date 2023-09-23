@@ -27,6 +27,7 @@ per run case:
     after GA runs a case:
         > PROCESS stored data
         > GENERATE reports
+            >> avg vert-core dist of elite per gen
         > CLEAR stored data
     Got to next case
 '''
@@ -39,24 +40,24 @@ class Analyser:
         self.ga_run_cases = [
             {
             'case_name':'all_low',
-            'gen_num': 100,
+            'gen_num': 10,
             'pop_size': 5,
             'gene_count': 7,
             'mute_rate': 0.3,
             'mute_amount': 0.05,
             'mute_subset': 0.25,
-            'fitness_limit': 0.8,
+            'fitness_limit': 0.69,
             },
-            {
-            'case_name':'all_high',
-            'gen_num': 100,
-            'pop_size': 10,
-            'gene_count': 30,
-            'mute_rate': 0.6,
-            'mute_amount': 0.2,
-            'mute_subset': 0.5,
-            'fitness_limit': 0.8,
-            }
+            # {
+            # 'case_name':'all_high',
+            # 'gen_num': 100,
+            # 'pop_size': 10,
+            # 'gene_count': 30,
+            # 'mute_rate': 0.6,
+            # 'mute_amount': 0.2,
+            # 'mute_subset': 0.5,
+            # 'fitness_limit': 0.8,
+            # }
             ]
         
         # property to store generational data as the GA runs a case

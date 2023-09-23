@@ -5,6 +5,7 @@
 
 import modules.attachment as attachment
 import numpy as np
+import os
 import csv
 
 '''
@@ -35,12 +36,22 @@ class Analyser:
         self.ga_run_cases = [
             {
             'case_name':'all_low',
-            'gen_num': 2,
+            'gen_num': 1,
             'pop_size': 2,
             'gene_count': 7,
             'mute_rate': 0.3,
             'mute_amount': 0.05,
             'mute_subset': 0.25,
+            'fitness_limit': 0.8,
+            },
+            {
+            'case_name':'all_high',
+            'gen_num': 1,
+            'pop_size': 5,
+            'gene_count': 50,
+            'mute_rate': 0.6,
+            'mute_amount': 0.2,
+            'mute_subset': 0.5,
             'fitness_limit': 0.8,
             }
             ]
@@ -78,31 +89,46 @@ class Analyser:
 
     def process_case_data(self, case_name):
 
+        # plots > elitism > misc useful info (avg vert dist, etc..)
+        
         # setup outputfolder/subfolders
         """ root > cases_analysis 
                     > [case_name, ..., case_name]
-                        elites csv folder, case plot(s), case_csv
+                        elites csv folder, case_csv files, case plot(s) files
          """
-
-        # populate diff case analytics:
         
-        # generate case summary csv file
-        self.create_case_csv('cases_analytics/'+case_name)
-        # case plot
-        # wheel drawing
+        # store relative path of cases folder 
+        cases__parent_dir = 'cases_analytics/'
+        case_folder_path = cases__parent_dir + case_name + '/'
 
-    # method used to accses stored case and generate a csv summary file of the case run
+        # create case's folder if it does not exist
+        if (not os.path.exists(case_folder_path)):
+            os.mkdir(case_folder_path)
+
+        # populate case folder with analytics:
+
+        # 1. generate case stats csv file
+        csv_file_name = case_folder_path + 'gens_stats.csv'
+        self.create_case_csv(csv_file_name)
+
+        # 2. case plot
+        case_plots_dir = case_folder_path + 'plots'
+        self.create_case_plots(case_plots_dir)
+
+        # 3. elite csvs
+
+        # 4. ??
+
+        # after performing analys, reset stored case data,
+        #  in preperatin for next case to be analysed
+        self.case_run_data = []
+
+    # method used to accses stored case data and generate a csv summary file of the case run
     def create_case_csv(self, file_path):
-
-        # set file name
-        file_name = file_path + '.csv'
-
         # open the file in write mode
         with open(file_path, 'w') as file:
-
             # instantiate a csv writer
             writer = csv.writer(file)
-
             # write csv columns for each stored case data key - skip case name
             writer.writerow([colName for colName in self.case_run_data[0].keys()])
 
@@ -111,4 +137,12 @@ class Analyser:
                         gen_data['mean_dist'], gen_data['mean_dist_change'],
                         gen_data['mean_verts']]
                 writer.writerow(row)
+
+    # method used to generate a visual plot using stored case run data
+    def create_case_plots(self, file_path):
+        # create case's plots folder if it does not exist
+        if (not os.path.exists(file_path)):
+            os.mkdir(file_path)
+
+        pass
         

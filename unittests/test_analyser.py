@@ -62,9 +62,6 @@ class AttachmentTest (unittest.TestCase):
     def test_process_case_data_exists(self):
         self.assertIsNotNone(analyser.Analyser.process_case_data)
 
-
-
-
     def test_create_case_csv_exists(self):
         self.assertIsNotNone(analyser.Analyser.create_case_csv)
 
@@ -73,7 +70,23 @@ class AttachmentTest (unittest.TestCase):
         anl.store_gen_data([10, 20, 30], [15, 7, 8])
         anl.store_gen_data([14, 40, 22], [9, 7, 12])
         anl.store_gen_data([6, 55, 17], [13, 8, 8])
-        anl.create_case_csv('../cases_analytics/test_case')
-        self.assertEqual(1, 1)
+        file_path = '../cases_analytics/test_case/test_case.csv'
+        anl.create_case_csv(file_path)
+        self.assertTrue(os.path.exists(file_path))
+
+    def test_create_case_plots_exists(self):
+        self.assertIsNotNone(analyser.Analyser.create_case_plots)
+
+    def test_create_case_plots_sets_folder(self):
+        anl = analyser.Analyser()
+        file_path = '../cases_analytics/test_case/test_plots'
+        anl.create_case_plots(file_path)
+        self.assertTrue(os.path.exists(file_path))
+
+    def test_create_case_plots_gens_plots(self):
+        
+        self.assertTrue(os.path.exists(file_path))
+
+
 
 unittest.main()

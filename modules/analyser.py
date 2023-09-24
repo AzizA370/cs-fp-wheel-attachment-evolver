@@ -12,58 +12,13 @@ import os
 import csv
 import modules.genome as genome
 
-'''
-analyser behaviour:
-
-stateful object
-
-sets system run cases/specs (rounds, GA varaibles, etc..)
-
-per run case:
-    as GA runs:
-        > COLLECT and store relavent data (per gen)
-            - fitness stats (max, mean dist)
-            - indvidual stats (mean verts num & dist)
-            - elite dna (per%num?) (for drawing, accessing later etc..)
-    after GA runs a case:
-        > PROCESS stored data
-        > GENERATE reports
-            >> avg vert-core dist of elite per gen
-        > CLEAR stored data
-    Got to next case
-'''
-
 class Analyser:
     def __init__(self):
 
         # property which sets evolution specs per GA run,
-        # used to set GA run variables
-
+        # recives ga cases specs from loading json file data
         self.ga_run_cases = None
 
-        # self.ga_run_cases = [
-        #     {
-        #     'case_name':'all_low',
-        #     'gen_num': 10,
-        #     'pop_size': 5,
-        #     'gene_count': 7,
-        #     'mute_rate': 0.3,
-        #     'mute_amount': 0.05,
-        #     'mute_subset': 0.25,
-        #     'fitness_limit': 0.69,
-        #     },
-        #     {
-        #     'case_name':'all_high',
-        #     'gen_num': 100,
-        #     'pop_size': 10,
-        #     'gene_count': 30,
-        #     'mute_rate': 0.6,
-        #     'mute_amount': 0.2,
-        #     'mute_subset': 0.5,
-        #     'fitness_limit': 0.8,
-        #     }
-        # ]
-        
         # property to store generational data as the GA runs a case
         self.case_run_data = []
 
@@ -77,7 +32,6 @@ class Analyser:
             # store cases in the analyser object
             self.ga_run_cases = cases_data
 
-    
     # method used to store evolution data per generation,
     def store_gen_data(self, fitness, vertices_num, elite_dna):
         
@@ -106,6 +60,7 @@ class Analyser:
         # append generation data
         self.case_run_data.append(gen_run_data)
 
+    # method used to create a csv stats file of case's evaluated generations
     def process_case_data(self, case_name):
 
         # elitism > Time tracking > case specs in plot > misc useful info (avg vert dist, etc..)
@@ -133,6 +88,8 @@ class Analyser:
         self.elites_to_csv(elite_csv_dir)
 
         # 4. runtime
+
+        # 5. draw wheel final elite
 
         # after performing analys, reset stored case data,
         #  in preperatin for next case to be analysed

@@ -25,12 +25,9 @@ def main():
         
         # get evolution cases from JSON file to setup ga run cases
         anl.load_cases_from_json('ga_cases.json')
-
-        # store preset ga run cases
-        run_cases = anl.ga_run_cases
-
+        
         # run GA for each preset case
-        for case in run_cases:
+        for case in anl.ga_run_cases:
             
             # CLI RUN MESSAGE
             print('\nCase: '+case['case_name'],

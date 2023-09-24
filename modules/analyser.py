@@ -4,6 +4,7 @@
 # about the performance of the GA and evolved individuals
 # ======================
 
+import json
 import modules.attachment as attachment
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,32 +38,46 @@ class Analyser:
 
         # property which sets evolution specs per GA run,
         # used to set GA run variables
-        self.ga_run_cases = [
-            {
-            'case_name':'all_low',
-            'gen_num': 10,
-            'pop_size': 5,
-            'gene_count': 7,
-            'mute_rate': 0.3,
-            'mute_amount': 0.05,
-            'mute_subset': 0.25,
-            'fitness_limit': 0.69,
-            },
-            # {
-            # 'case_name':'all_high',
-            # 'gen_num': 100,
-            # 'pop_size': 10,
-            # 'gene_count': 30,
-            # 'mute_rate': 0.6,
-            # 'mute_amount': 0.2,
-            # 'mute_subset': 0.5,
-            # 'fitness_limit': 0.8,
-            # }
-            ]
+
+        self.ga_run_cases = None
+
+        # self.ga_run_cases = [
+        #     {
+        #     'case_name':'all_low',
+        #     'gen_num': 10,
+        #     'pop_size': 5,
+        #     'gene_count': 7,
+        #     'mute_rate': 0.3,
+        #     'mute_amount': 0.05,
+        #     'mute_subset': 0.25,
+        #     'fitness_limit': 0.69,
+        #     },
+        #     {
+        #     'case_name':'all_high',
+        #     'gen_num': 100,
+        #     'pop_size': 10,
+        #     'gene_count': 30,
+        #     'mute_rate': 0.6,
+        #     'mute_amount': 0.2,
+        #     'mute_subset': 0.5,
+        #     'fitness_limit': 0.8,
+        #     }
+        # ]
         
         # property to store generational data as the GA runs a case
         self.case_run_data = []
 
+    # method to handle JSON data and sets GA run cases
+    def load_cases_from_json(self, path_to_file):
+        
+        # accsess the json cases file and load in the cases
+        with open(path_to_file) as json_file:
+            cases_data = json.load(json_file)
+
+            # store cases in the analyser object
+            self.ga_run_cases = cases_data
+
+    
     # method used to store evolution data per generation,
     def store_gen_data(self, fitness, vertices_num, elite_dna):
         
@@ -188,9 +203,6 @@ class Analyser:
         # set legends
         ax.legend(['max distance', 'mean distance', 'mean trend'])
         
-        #add footnote below the figure
-        # ax.annotate('lidshfjsdhfkjs | lidshfjsdhfkjs | lidshfjsdhfkjs | lidshfjsdhfkjs | dfds', xy=(5, 5))
-        
         # variable to store footer note 
         footer_str = '* Case Specs: \n'
 
@@ -236,3 +248,4 @@ class Analyser:
 
             # write dna to disk as a csv file usin csv writer defined in the genome module
             genome.Genome.to_csv(elite_dna, path_to_file)
+

@@ -17,9 +17,15 @@ import os
 
 def main():
 
-        # pass json when instantiating analyser - single control point
         # instantiate an analyser object
         anl = analyser.Analyser()
+
+        # CLI RUN MESSAGE
+        print('\nLoading evolution cases.\n')
+        
+        # get evolution cases from JSON file to setup ga run cases
+        anl.load_cases_from_json('ga_cases.json')
+
         # store preset ga run cases
         run_cases = anl.ga_run_cases
 
@@ -156,7 +162,7 @@ def main():
 
             # CLI RUN MESSAGE
             print('Case: '+case['case_name'], 
-            '- evolution and anlysis complete.\n')
+            '- Evolution and Anlysis Complete.\n')
 
 if __name__ == "__main__":
          main()

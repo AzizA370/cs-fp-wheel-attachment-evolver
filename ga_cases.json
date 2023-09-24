@@ -1,0 +1,22 @@
+[
+  {
+    "case_name": "all_low",
+    "gen_num": 2,
+    "pop_size": 5,
+    "gene_count": 7,
+    "mute_rate": 0.3,
+    "mute_amount": 0.05,
+    "mute_subset": 0.25,
+    "fitness_limit": 0.8
+  },
+  {
+    "case_name": "all_high",
+    "gen_num": 5,
+    "pop_size": 3,
+    "gene_count": 15,
+    "mute_rate": 0.6,
+    "mute_amount": 0.2,
+    "mute_subset": 0.5,
+    "fitness_limit": 0.8
+  }
+]

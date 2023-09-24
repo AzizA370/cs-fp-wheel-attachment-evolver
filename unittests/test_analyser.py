@@ -17,8 +17,17 @@ class AttachmentTest (unittest.TestCase):
 
     def test_has_ga_cases(self):
         anl = analyser.Analyser()
+        anl.load_cases_from_json('test_case.json')
         self.assertIsNotNone(anl.ga_run_cases)
     
+    def test_load_cases_from_json_exists(self):
+        self.assertIsNotNone(analyser.Analyser.load_cases_from_json)
+    
+    def test_load_cases_from_json_loads_cases(self):
+        anl = analyser.Analyser()
+        anl.load_cases_from_json('test_case.json')
+        self.assertIsNotNone(anl.ga_run_cases)
+
     def test_store_gen_data_exists(self):
         self.assertIsNotNone(analyser.Analyser.store_gen_data)
     
@@ -77,6 +86,7 @@ class AttachmentTest (unittest.TestCase):
 
     def test_create_case_plots_sets_folder(self):
         anl = analyser.Analyser()
+        anl.load_cases_from_json('test_case.json')
         file_path = '../cases_analytics/test_case/test_plots'
         anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])
         anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])

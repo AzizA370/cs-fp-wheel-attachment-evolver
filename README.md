@@ -1,6 +1,6 @@
-# Wheel Attachment Shape Optimisation
+## Wheel Attachment Shape Optimisation
 
-### Genetic algorithm implementation used to find an optimal n-poly attachment shape which enables a wheel to climb up a standard staircase.
+#### Genetic algorithm implementation used to find an optimal n-poly attachment shape which enables a wheel to climb up a standard staircase.
 
 #### Run instructions:
 

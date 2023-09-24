@@ -1,5 +1,5 @@
 # Module: main - Entry point of the application
-# used to importt and implement all GA's components
+# used to import and implement all GA's components
 # ===================
 
 # import all relevant GA modules 
@@ -25,7 +25,7 @@ def main():
         
         # get evolution cases from JSON file to setup ga run cases
         anl.load_cases_from_json('ga_cases.json')
-        
+
         # run GA for each preset case
         for case in anl.ga_run_cases:
             
@@ -57,7 +57,7 @@ def main():
                     +' - '+'Gen# '+str(gen_num)+'/'+str(case['gen_num']-1))
 
                     # run vehicle individual through simulation
-                    sim.run_wheel(attachm, speed=2.0, iterations=400)
+                    sim.run_wheel(attachm, speed=2.0, iterations=2900)
 
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 

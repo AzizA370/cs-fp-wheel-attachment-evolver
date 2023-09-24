@@ -102,7 +102,8 @@ class Analyser:
             # instantiate a csv writer
             writer = csv.writer(file)
             # write csv columns for each stored case data key - skip case name
-            writer.writerow([colName for colName in self.case_run_data[0].keys()])
+            writer.writerow([colName for colName in self.case_run_data[0].keys()
+                            if colName != 'elite_dna'])
 
             for gen_data in self.case_run_data:
                 row = [gen_data['gen_num'], gen_data['min_dist'], gen_data['max_dist'], 

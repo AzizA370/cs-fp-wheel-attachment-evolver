@@ -1,8 +1,8 @@
 [
   {
     "case_name": "all_low",
-    "gen_num": 20,
-    "pop_size": 10,
+    "gen_num": 5,
+    "pop_size": 5,
     "gene_count": 7,
     "mute_rate": 0.3,
     "mute_amount": 0.05,
@@ -11,8 +11,8 @@
   },
   {
     "case_name": "high_mutation",
-    "gen_num": 20,
-    "pop_size": 10,
+    "gen_num": 5,
+    "pop_size": 5,
     "gene_count": 7,
     "mute_rate": 0.7,
     "mute_amount": 0.2,
@@ -21,8 +21,8 @@
   },
   {
     "case_name": "all_high",
-    "gen_num": 50,
-    "pop_size": 20,
+    "gen_num": 5,
+    "pop_size": 5,
     "gene_count": 27,
     "mute_rate": 0.6,
     "mute_amount": 0.2,

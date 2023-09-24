@@ -4,8 +4,8 @@
 
 #### Run instructions:
 
-- install packages in the requiremnts file.
-- Specify cases/specs of GA run in 'ga_cases' JSON file (optional).
-- run main.py from the command line.
+1. Install packages in the requiremnts file.
+2. Specify cases/specs of GA run in 'ga_cases' JSON file (optional).
+3. Run main.py from the command line.
 
 ##### Results are dynamically generated per evolved case, and are stored in the 'case_analytics' folder.

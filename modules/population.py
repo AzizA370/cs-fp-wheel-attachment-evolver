@@ -1,6 +1,7 @@
 # Class: population
 # a contatiner for generated wheel objects, 
 # responsible for creating fitness maps and selecting parents for breeding
+# Credit: Class was adapted from CM2030 Aritifial Intellegnece Evolving Creature Case study
 # ======================
 
 import modules.attachment as attachment

@@ -26,10 +26,10 @@ class SimulationTest (unittest.TestCase):
         sim.run_wheel(attach, speed=1.0, iterations=500)
         self.assertIsNotNone(sim)
     
-    # def test_pos_updates(self): 
-    #     sim = simulation.Simulation()
-    #     attach = attachment.Attachment(gene_count=10)
-    #     sim.run_wheel(attach, speed=1.0, iterations=2900)
-    #     self.assertNotEqual(attach.initial_position, attach.final_position)
+    def test_pos_updates(self): 
+        sim = simulation.Simulation()
+        attach = attachment.Attachment(gene_count=10)
+        sim.run_wheel(attach, speed=1.0, iterations=2900)
+        self.assertNotEqual(attach.initial_position, attach.final_position)
     
 unittest.main()

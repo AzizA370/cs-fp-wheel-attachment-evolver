@@ -1,4 +1,6 @@
 #Class: genome & spec operations
+# responsible encoding and all gene/genome interactions and processing
+# Credit: Class was adapted from CM2030 Aritifial Intellegnece Evolving Creature Case study
 # ================
 import numpy as np
 import math

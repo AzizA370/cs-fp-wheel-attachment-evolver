@@ -57,18 +57,11 @@ def main():
                     +' - '+'Gen# '+str(gen_num)+'/'+str(case['gen_num']-1))
 
                     # run vehicle individual through simulation
-                    sim.run_wheel(attachm, speed=2.0, iterations=2900)
+                    sim.run_wheel(attachm, speed=1.0, iterations=1000)
 
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 
                         for attachm in pop.attachments]
-
-                # # identify best performer (elite individual)
-                # max_fit = np.max(fits)
-                # for attachm in pop.attachments:
-                #     if attachm.get_dist_travelled() == max_fit:
-                #         elite_dna = attachm.dna
-                #         break
 
                 # number of vertices per individual
                 attachms_vert_num = [len(attachm.dna) 
@@ -89,17 +82,21 @@ def main():
                     
                     # Crossover & Mutation:
                     # select first parent
-                    parent_a_index = population.Population.select_parent(fit_map)
+                    parent_a_index = population.Population.select_parent(fit_map, case['fit_limit'])
                     # select second parent
-                    parent_b_index = population.Population.select_parent(fit_map)
+                    parent_b_index = population.Population.select_parent(fit_map, case['fit_limit'])
                 
                     # store parents
                     parent_a = pop.attachments[parent_a_index]
                     parent_b = pop.attachments[parent_b_index]
 
-                    # perfrom dna crossover - uniform gene selection
-                    # >>>> MAKE IT ACCOUNT FOR FITNESS OF EACH PARENT (BIAS GENE SELECTION)
-                    new_dna = genome.Genome.uniform_crossover(parent_a.dna, parent_b.dna)
+                    # store fitness of each parent
+                    parent_a_fitness = parent_a.get_dist_travelled()
+                    parent_b_fitness = parent_b.get_dist_travelled()
+
+                    # perfrom dna crossover - weighted uniform gene selection
+                    new_dna = genome.Genome.uniform_crossover(parent_a.dna, parent_b.dna,
+                                                                parent_a_fitness, parent_a_fitness)
 
                     # >> Mutations
                     # perfrom dna point mutate

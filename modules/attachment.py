@@ -208,14 +208,12 @@ class Attachment():
         # return sorted coordinates 
         return coords_list[sorted_indices]
 
-
     # create functions to store/update fitness scores as it runs
     def update_position(self, position):
         if self.initial_position == None:
             self.initial_position = position
         else:
             self.final_position = position
-
 
     # create function to calculate distance moved
     def get_dist_travelled(self):

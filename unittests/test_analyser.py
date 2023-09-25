@@ -106,5 +106,15 @@ class AttachmentTest (unittest.TestCase):
         anl.elites_to_csv(file_path)
         self.assertTrue(os.path.exists(file_path))
 
+    def test_draw_best_shape_exists(self):
+        self.assertIsNotNone(analyser.Analyser.draw_best_shape)
+
+    def test_draw_best_shape_creates_graphic(self):
+        anl = analyser.Analyser()
+        anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])
+        anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])
+        file_path = '../cases_analytics/test_case/test_plots'
+        anl.draw_best_shape(file_path)
+        self.assertTrue(os.path.exists(file_path))
 
 unittest.main()

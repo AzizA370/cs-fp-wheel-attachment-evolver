@@ -29,13 +29,6 @@ class Genome():
 
             "vert_dist": {"scale":120},
             "vert_angle": {"scale":360}
-
-            # "core_radius": {"scale":25},
-            # "core_offset_x": {"scale":400},
-            # "vert_num": {"scale":27},
-            # "vert_dist_min": {"scale":2},
-            # "vert_dist_max": {"scale":4},
-            # "segment_thickness": {"scale":3}
         }
         ind = 0
         for key in gene_spec.keys():
@@ -65,11 +58,11 @@ class Genome():
     # static method used to crossover two dna strands together
     # used to breed two genomes and generated a new genome combination
     # it averages genome size between both parents
-    # it selects genes uniformly from either parent (coin filp) to produce the child genome
-    # Improvement: may benifit from adding bias to parent with better fitness,
-    # where genes are more likely to be selected from parent with heigher fitness score
+    # it selects genes uniformly from either parent (coin filp) to produce the child genome,
+    # gene selecttion is biased towards parent with better fitness,
+    # where the parent with heigher fitness score contributes more genes 
     @staticmethod
-    def uniform_crossover(genome_a, genome_b):
+    def uniform_crossover(genome_a, genome_b, genome_a_fitness, genome_b_fitness):
         
         # initialise new genome with average length of genome a & b
         # calcualte avg genome length
@@ -78,12 +71,15 @@ class Genome():
         # create new genome of same type as, and based, on passed genomes
         new_genome = Genome.get_random_genome(len(genome_a[0]), avg_genome_length)
 
+        # calculate selection bias based on parents' fitness (weighted gene selection)
+        bias_rate = genome_a_fitness/(genome_a_fitness+genome_b_fitness)
+
         # perform crossover
         selected_gene = None
         # iterate over each new genome index
         for ind in range(len(new_genome)):
             # select a random gene from either parent
-            if random.random() <= 0.5:
+            if random.random() <= bias_rate:
                 gene_ind = random.randint(0, len(genome_a)-1)
                 selected_gene = genome_a[gene_ind]
             else:

@@ -11,6 +11,7 @@ import numpy as np
 import os
 import csv
 import modules.genome as genome
+import modules.attachment as attachment
 
 class Analyser:
     def __init__(self):
@@ -87,9 +88,8 @@ class Analyser:
         elite_csv_dir = case_folder_path + 'elites_CSVs'
         self.elites_to_csv(elite_csv_dir)
 
-        # 4. runtime
-
         # 5. draw wheel final elite
+        # self.draw_best_shape(case_plots_dir)
 
         # after performing analys, reset stored case data,
         #  in preperatin for next case to be analysed
@@ -131,20 +131,20 @@ class Analyser:
 
         # create figure and set its size
         fig, ax = plt.subplots(figsize=(10,7), facecolor=plt.cm.Blues(.2))
-        ax.set_facecolor(plt.cm.Blues(.1))
+        ax.set_facecolor(plt.cm.Blues(0.0))
         
         # set plot title
         header = 'Distance Covered by Evolved Wheel Attatchment\n'
-        sub_header = "Case : " + case_name + ' *'
+        sub_header = 'Case: ' + case_name + '*'
         ax.set_title(header + sub_header, fontsize=18, fontweight='bold')
 
         # plot lines of generational evolution data
         # max distance line
-        ax.plot(generations, max_dist, color = plt.cm.cool(0.3), marker='*', markersize=8)
+        ax.plot(generations, max_dist, color = plt.cm.Reds(0.3), marker='*', markersize=8)
         # max distance line
-        ax.plot(generations, mean_dist, color = plt.cm.cool(0.6), marker='o', markersize=8)
+        ax.plot(generations, mean_dist, color = plt.cm.cool(0.3), marker='o', markersize=8)
         # mean trend line
-        ax.plot(generations, trend(generations), color = plt.cm.cool(0.7), linestyle='dashed')
+        ax.plot(generations, trend(generations), color = plt.cm.cool(0.6), linestyle='dashed')
 
         # set plot lables
         ax.set_xlabel("Generation Number", fontsize=16)
@@ -162,7 +162,7 @@ class Analyser:
         ax.legend(['max distance', 'mean distance', 'mean trend'])
         
         # variable to store footer note 
-        footer_str = '* Case Specs: \n'
+        footer_str = '* Case specs: \n'
 
         # build up figure footer to note case specs
         for case in self.ga_run_cases:
@@ -206,4 +206,23 @@ class Analyser:
 
             # write dna to disk as a csv file usin csv writer defined in the genome module
             genome.Genome.to_csv(elite_dna, path_to_file)
+
+    # method used to draw the shape (morphology) of final elite individual
+    def draw_best_shape(self, file_path):
+        
+        # get elite dna
+        elite_dna = self.case_run_data[-1]['elite_dna']
+
+        # generate graphic of connected vertices around a core
+       
+        # Get sorted x,y coordinas of elite's vertices:
+        # convert to x,y cartesian coordinates
+        spec = genome.Genome.get_gene_spec()
+        genome_discts = genome.Genome.get_genome_dicts()
+
+        # sort coordinates by angle size from centre point
+
+
+        pass
+
 

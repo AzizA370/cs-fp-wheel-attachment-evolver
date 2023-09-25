@@ -76,7 +76,7 @@ class GenomeTest (unittest.TestCase):
     def test_uniform_crossover_output(self):
         g1 = np.array([[1,3], [4,6], [7, 9], [10, 12], [13, 15]])
         g2 = np.array([[71, 3], [74,75], [77, 79]])
-        g3 = genome.Genome.uniform_crossover(g1, g2)
+        g3 = genome.Genome.uniform_crossover(g1, g2, 20, 15)
         avg_length = (len(g1) + len(g2))/2
         self.assertGreaterEqual(len(g3), avg_length)
 

@@ -25,9 +25,9 @@ class Population:
     # method used to select a parent
     # it implements 'roulette wheel selection' using passed fitness map
     @staticmethod
-    def select_parent(fitmap):
-        r = np.random.rand() # 0-1
-        # r = np.random.uniform(0.9, 1) #top x%
+    def select_parent(fitmap, fitness_threshold=0.0):
+        # select parent based on fitness and threshold (eg. top 10%, top 50%, etc..)
+        r = np.random.uniform(fitness_threshold, 1) #top x%
         r = r * fitmap[-1]
         for i in range(len(fitmap)):
             if r <= fitmap[i]:

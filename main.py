@@ -47,16 +47,19 @@ def main():
                 # Establish sim to run population:
                 # run/evaluate each individual in the population through the simulation
                 for sim_ind in range(len(pop.attachments)):
+                    
+                    # get the attatchment indvidual
                     attachm = pop.attachments[sim_ind]
+                    
                     # instantiate a new simulation
                     sim = simulation.Simulation()
 
                     # CLI RUN MESSAGE
                     print('Case: '+case['case_name'],
-                    '- evaluating Indiv# '+str(sim_ind) +'/'+str(len(pop.attachments)-1)
-                    +' - '+'Gen# '+str(gen_num)+'/'+str(case['gen_num']-1))
+                    '- evaluating Indiv# '+str(sim_ind+1) +'/'+str(len(pop.attachments))
+                    +' - '+'Gen# '+str(gen_num+1)+'/'+str(case['gen_num']))
 
-                    # run vehicle individual through simulation
+                    # run the individual through simulation
                     sim.run_wheel(attachm, speed=1.0, iterations=1000)
 
                 # get fitness scores of vehicles
@@ -127,11 +130,17 @@ def main():
                 max_fit = np.max(fits)
                 for attachm in pop.attachments:
                     if attachm.get_dist_travelled() == max_fit:
+
+                        # store elite's dna
                         elite_dna = attachm.dna
-                        # instantaie a new vehicle object
+                        
+
+                        # # instantaie a new vehicle object
                         new_attachment = attachment.Attachment(1)
-                        # set its dna to be the bred/mutated dna
+
+                        # # set its dna to be the elite's dna
                         new_attachment.update_dna(elite_dna)
+
                         # add vehicle to new_vehicles list
                         new_attachmens[0] = new_attachment
                         break

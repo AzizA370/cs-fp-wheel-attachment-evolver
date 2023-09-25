@@ -89,7 +89,7 @@ class Analyser:
         self.elites_to_csv(elite_csv_dir)
 
         # 4. draw wheel final elite
-        self.draw_best_shape(case_plots_dir)
+        self.draw_best_shape(case_plots_dir, case_name)
 
         # after performing analys, reset stored case data,
         # in preperatin for next case to be analysed
@@ -134,7 +134,7 @@ class Analyser:
         ax.set_facecolor(plt.cm.Blues(0.0))
         
         # set plot title
-        header = 'Distance Covered by Evolved Wheel Attatchment\n'
+        header = 'Distance Climbed by Evolved Wheel Attatchment\n'
         sub_header = 'Case: ' + case_name + '*'
         ax.set_title(header + sub_header, fontsize=18, fontweight='bold')
 
@@ -148,7 +148,7 @@ class Analyser:
 
         # set plot lables
         ax.set_xlabel("Generation Number", fontsize=16)
-        ax.set_ylabel("Distance Covered", fontsize=16)
+        ax.set_ylabel("Distance Climbed", fontsize=16)
 
         # hide right and top borders
         ax.spines['right'].set_visible(False)
@@ -185,7 +185,7 @@ class Analyser:
         fig.tight_layout()
 
         # save plot
-        plt.savefig(file_path+"/dist_covered"+".jpg")
+        plt.savefig(file_path+"/dist_climbed"+".jpg")
 
         # clear & close the figure, prep for next case
         plt.clf()
@@ -235,52 +235,41 @@ class Analyser:
         x_values.append(x_values[0])
         y_values.append(y_values[0])
         
-        
         # create figure and set its size and style
         fig, ax = plt.subplots(figsize=(5,5), facecolor=plt.cm.Blues(.2))
         ax.set_facecolor(plt.cm.Blues(0.0))
         
         # set plot title
-        header = 'Shape of Final Elite\n'
+        header = 'Final Elite Wheel Attatchemnt Shape\n'
         sub_header = 'Case: ' + case_name
-        ax.set_title(header + sub_header, fontsize=18, fontweight='bold')
+        ax.set_title(header + sub_header, fontsize=18, fontweight='normal')
 
         # plot lines of generational evolution data
         # max distance line
-        ax.plot(x_values, y_values, '-o', color = plt.cm.Reds(0.3), marker='*', markersize=8)
+        ax.plot(x_values, y_values, color = plt.cm.Blues(0.8), 
+                marker='o', markerfacecolor= plt.cm.Oranges(0.3), markersize=7)
 
         # set plot lables
-        ax.set_xlabel("Generation Number", fontsize=16)
-        ax.set_ylabel("Distance Covered", fontsize=16)
+        ax.set_xlabel("x", fontsize=13)
+        ax.set_ylabel("y", fontsize=13)
 
-        # draw scatter plot of wheel morphology
-        # plt.plot(x_values, y_values, '-o')
-        
+        dist_travelled = self.case_run_data[-1]['max_dist']
+        ver_num = len(elite_dna)
+        footer_str = "Distance climbed: " + str(dist_travelled)
+        # set figure footer
+        ax.annotate(footer_str,
+            xy = (0.5, -0.21),
+            xycoords='axes fraction',
+            ha='center',
+            va="center",
+            fontsize=12)
+
+        # set figure layout
+        fig.tight_layout()
+    
         # save plot
-        plt.savefig(file_path+"/bes_shape"+".jpg")
+        plt.savefig(file_path+"/best_shape"+".jpg")
 
         # clear & close the figure, prep for next case
         plt.clf()
         plt.close(1)
-
-
-
-        
-        
-
-
-
-        # # hide right and top borders
-        # ax.spines['right'].set_visible(False)
-        # ax.spines['top'].set_visible(False)
-
-        # # hide axis tick marks
-        # ax.yaxis.set_ticks_position('none')
-        # ax.xaxis.set_ticks_position('none')
-
-        # # set legends
-        # ax.legend(['max distance', 'mean distance', 'mean trend'])
-
-
-
-

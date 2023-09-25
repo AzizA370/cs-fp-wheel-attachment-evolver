@@ -12,7 +12,6 @@ class Genome():
     @staticmethod
     def get_random_gene(gene_length):
         gene = np.array([np.random.random() for i in range(gene_length)])
-        # gene = np.array([random.uniform(0.7, 1), random.random()])
         return gene
 
     # a method which generates an array of random 0-1 values

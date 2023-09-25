@@ -240,7 +240,7 @@ class Analyser:
         ax.set_facecolor(plt.cm.Blues(0.0))
         
         # set plot title
-        header = 'Final Elite Wheel Attatchemnt Shape\n'
+        header = 'Evolved Attatchemnt Shape\n'
         sub_header = 'Case: ' + case_name
         ax.set_title(header + sub_header, fontsize=18, fontweight='normal')
 

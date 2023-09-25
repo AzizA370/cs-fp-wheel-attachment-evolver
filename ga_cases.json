@@ -1,12 +1,12 @@
 [
   {
     "case_name": "trial_case",
-    "gen_num": 10,
-    "pop_size": 10,
-    "gene_count": 12,
-    "mute_rate": 0.5,
+    "gen_num": 5,
+    "pop_size": 20,
+    "gene_count": 25,
+    "mute_rate": 0.4,
     "mute_amount": 0.15,
-    "mute_subset": 0.3,
+    "mute_subset": 0.25,
     "fit_limit": 0.3
   }
 ]

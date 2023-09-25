@@ -21,7 +21,7 @@ def main():
         anl = analyser.Analyser()
 
         # CLI RUN MESSAGE
-        print('\nLoading evolution cases.\n')
+        print('Importing GA evolution cases.\n')
         
         # get evolution cases from JSON file to setup ga run cases
         anl.load_cases_from_json('ga_cases.json')
@@ -36,6 +36,9 @@ def main():
             # establish a population based on case specs,
             # instantiates & contains stateful vehicle objects
             pop = population.Population(case['pop_size'], gene_count=case['gene_count'])
+
+            # instantaie a threaded sim object
+            sim = simulation.ThreadedSim(pool_size=12)
             
             # CLI RUN MESSAGE
             print('Case: '+case['case_name'],
@@ -44,23 +47,28 @@ def main():
             # run GA for number of generation
             for gen_num in range(case['gen_num']):
 
-                # Establish sim to run population:
-                # run/evaluate each individual in the population through the simulation
-                for sim_ind in range(len(pop.attachments)):
+                # # Establish sim to run population:
+                # # run/evaluate each individual in the population through the simulation
+                # for sim_ind in range(len(pop.attachments)):  
+                #     # get the attatchment indvidual
+                #     attachm = pop.attachments[sim_ind]
                     
-                    # get the attatchment indvidual
-                    attachm = pop.attachments[sim_ind]
-                    
-                    # instantiate a new simulation
-                    sim = simulation.Simulation()
+                #     # instantiate a new simulation
+                #     sim = simulation.Simulation()
 
-                    # CLI RUN MESSAGE
-                    print('Case: '+case['case_name'],
-                    '- evaluating Indiv# '+str(sim_ind+1) +'/'+str(len(pop.attachments))
-                    +' - '+'Gen# '+str(gen_num+1)+'/'+str(case['gen_num']))
+                #     # CLI RUN MESSAGE
+                #     print('Case: '+case['case_name'],
+                #     '- evaluating Indiv# '+str(sim_ind+1) +'/'+str(len(pop.attachments))
+                #     +' - '+'Gen# '+str(gen_num+1)+'/'+str(case['gen_num']))
 
-                    # run the individual through simulation
-                    sim.run_wheel(attachm, speed=1.0, iterations=1000)
+                #     # run the individual through simulation
+                #     sim.run_wheel(attachm, speed=1.0, iterations=2400)
+
+                # CLI RUN MESSAGE
+                print('Case: '+case['case_name'],'- evaluating Gen# '+str(gen_num+1)+'/'+str(case['gen_num']))
+
+                # evaluate the population using the sim
+                sim.eval_population(pop, 1.0, 2400)
 
                 # get fitness scores of vehicles
                 fits = [attachm.get_dist_travelled() 
@@ -77,8 +85,8 @@ def main():
                 fit_map = population.Population.get_fitness_map(fits)
                 
                 # CLI RUN MESSAGE
-                print('\nCase: '+case['case_name'], 
-                '- applying crossover & mutation to population individuals')
+                # print('\nCase: '+case['case_name'], 
+                # '- applying crossover & mutation to population individuals')
 
                 # select 2 parents for each vehicle in the evaluated population and breed them
                 for i in range(len(pop.attachments)):
@@ -124,7 +132,7 @@ def main():
                     new_attachmens.append(new_attachment)
 
                 # CLI RUN MESSAGE
-                print('Case: '+case['case_name'], '- setting elites of next generation')
+                # print('Case: '+case['case_name'], '- setting elites of next generation')
 
                 # elitism - identify and keep best performer in the popultion
                 max_fit = np.max(fits)
@@ -150,15 +158,15 @@ def main():
 
 
                 # CLI RUN MESSAGE
-                print('Case: '+case['case_name'], 
-                '- updating population with next generation indviduals.\n')
+                # print('Case: '+case['case_name'], 
+                # '- updating population with next generation indviduals.\n')
 
                 # update population with new generation of vehicles
                 pop.attachments = new_attachmens
             
             # CLI RUN MESSAGE
-            print('Case: '+case['case_name'], 
-            '- generating case analytics..\n')
+            # print('Case: '+case['case_name'], 
+            # '- generating case analytics..\n')
 
             # generate case stats & analytics
             anl.process_case_data(case['case_name'])

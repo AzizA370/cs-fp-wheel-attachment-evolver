@@ -35,7 +35,5 @@ class SimToolsTest (unittest.TestCase):
 
     def test_construct_vehicle_exists(self):
         self.assertIsNotNone(sim_tools.SimTools.construct_vehicle)
-    
-    
 
 unittest.main()

@@ -17,9 +17,6 @@ class SimulationTest (unittest.TestCase):
     def test_class_exists(self):
         self.assertIsNotNone(simulation.Simulation)
     
-    def test_draw_exists(self):
-        self.assertIsNotNone(simulation.Simulation.draw)
-    
     def test_run_wheel_exists(self):
         self.assertIsNotNone(simulation.Simulation.run_wheel)
     

@@ -1,0 +1,12 @@
+[
+  {
+    "case_name": "trial_case",
+    "gen_num": 5,
+    "pop_size": 10,
+    "gene_count": 15,
+    "mute_rate": 0.3,
+    "mute_amount": 0.15,
+    "mute_subset": 0.1,
+    "fitt_limit": 0.2
+  }
+]

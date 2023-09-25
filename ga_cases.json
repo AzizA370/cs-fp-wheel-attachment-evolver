@@ -1,12 +1,82 @@
 [
   {
-    "case_name": "trial_case",
-    "gen_num": 5,
-    "pop_size": 10,
-    "gene_count": 15,
-    "mute_rate": 0.3,
-    "mute_amount": 0.15,
-    "mute_subset": 0.1,
+    "case_name": "base",
+    "gen_num": 100,
+    "pop_size": 15,
+    "gene_count": 10,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
+    "mute_subset": 0.2,
     "fitt_limit": 0.2
+  },
+  {
+    "case_name": "high_pop",
+    "gen_num": 100,
+    "pop_size": 30,
+    "gene_count": 10,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
+    "mute_subset": 0.2,
+    "fitt_limit": 0.2
+  },
+  {
+    "case_name": "high_gene",
+    "gen_num": 100,
+    "pop_size": 15,
+    "gene_count": 30,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
+    "mute_subset": 0.2,
+    "fitt_limit": 0.2
+  },
+  {
+    "case_name": "high_mute",
+    "gen_num": 100,
+    "pop_size": 15,
+    "gene_count": 10,
+    "mute_rate": 0.4,
+    "mute_amount": 0.3,
+    "mute_subset": 0.6,
+    "fitt_limit": 0.2
+  },
+  {
+    "case_name": "high_fitt",
+    "gen_num": 100,
+    "pop_size": 15,
+    "gene_count": 10,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
+    "mute_subset": 0.2,
+    "fitt_limit": 0.7
+  },
+  {
+    "case_name": "high_gen",
+    "gen_num": 200,
+    "pop_size": 15,
+    "gene_count": 10,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
+    "mute_subset": 0.2,
+    "fitt_limit": 0.2
+  },
+  {
+    "case_name": "all_high",
+    "gen_num": 200,
+    "pop_size": 30,
+    "gene_count": 30,
+    "mute_rate": 0.4,
+    "mute_amount": 0.3,
+    "mute_subset": 0.6,
+    "fitt_limit": 0.7
+  },
+  {
+    "case_name": "optimal",
+    "gen_num": 200,
+    "pop_size": 30,
+    "gene_count": 30,
+    "mute_rate": 0.2,
+    "mute_amount": 0.1,
+    "mute_subset": 0.2,
+    "fitt_limit": 0.3
   }
 ]

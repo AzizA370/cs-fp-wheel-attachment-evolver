@@ -71,12 +71,12 @@
   },
   {
     "case_name": "optimal",
-    "gen_num": 200,
+    "gen_num": 100,
     "pop_size": 30,
     "gene_count": 30,
-    "mute_rate": 0.2,
-    "mute_amount": 0.1,
+    "mute_rate": 0.15,
+    "mute_amount": 0.05,
     "mute_subset": 0.2,
-    "fitt_limit": 0.3
+    "fitt_limit": 0.7
   }
 ]

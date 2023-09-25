@@ -1,6 +1,7 @@
 # import modules to interact with the file system
 import sys
 import os
+import random
 
 # avail external project folder to this script, in order to import relevant module
 sys.path.append(os.path.abspath(os.path.join('..')))
@@ -111,10 +112,14 @@ class AttachmentTest (unittest.TestCase):
 
     def test_draw_best_shape_creates_graphic(self):
         anl = analyser.Analyser()
-        anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])
-        anl.store_gen_data([6, 55, 17], [13, 8, 8], [[11],[22],[33], [44]])
+        
+        # create random genome inplace for testing purposes
+        elite_genome = []
+        for num in range(10):
+            elite_genome.append([random.random(), random.random()])
+        anl.store_gen_data([6, 55, 17], [13, 8, 8], elite_genome)
         file_path = '../cases_analytics/test_case/test_plots'
-        anl.draw_best_shape(file_path)
+        anl.draw_best_shape(file_path, 'test_case')
         self.assertTrue(os.path.exists(file_path))
 
 unittest.main()

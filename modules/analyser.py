@@ -88,11 +88,11 @@ class Analyser:
         elite_csv_dir = case_folder_path + 'elites_CSVs'
         self.elites_to_csv(elite_csv_dir)
 
-        # 5. draw wheel final elite
-        # self.draw_best_shape(case_plots_dir)
+        # 4. draw wheel final elite
+        self.draw_best_shape(case_plots_dir)
 
         # after performing analys, reset stored case data,
-        #  in preperatin for next case to be analysed
+        # in preperatin for next case to be analysed
         self.case_run_data = []
 
     # method used to accses stored case data and generate a csv summary file of the case run
@@ -208,7 +208,7 @@ class Analyser:
             genome.Genome.to_csv(elite_dna, path_to_file)
 
     # method used to draw the shape (morphology) of final elite individual
-    def draw_best_shape(self, file_path):
+    def draw_best_shape(self, file_path, case_name):
         
         # get elite dna
         elite_dna = self.case_run_data[-1]['elite_dna']
@@ -216,13 +216,71 @@ class Analyser:
         # generate graphic of connected vertices around a core
        
         # Get sorted x,y coordinas of elite's vertices:
-        # convert to x,y cartesian coordinates
+        # generate genome specs and get x,y cartesian coordinates
         spec = genome.Genome.get_gene_spec()
-        genome_discts = genome.Genome.get_genome_dicts()
-
+        genome_discts = genome.Genome.get_genome_dicts(elite_dna, spec)
+        elite_coord = attachment.Attachment.set_vertices_coordinates(0, 0, genome_discts)
+        
         # sort coordinates by angle size from centre point
+        elite_coord = attachment.Attachment.get_clockwise_adjacency(elite_coord)
+
+        # get 1d arrays from the 2d array
+        x_values, y_values = np.split(elite_coord,2,axis=1)
+
+        # flatten coordinate x,y component
+        x_values = list(x_values.flatten())
+        y_values = list(y_values.flatten())
+
+        # duplicate last coordinates pair to get a closed shape
+        x_values.append(x_values[0])
+        y_values.append(y_values[0])
+        
+        
+        # create figure and set its size and style
+        fig, ax = plt.subplots(figsize=(5,5), facecolor=plt.cm.Blues(.2))
+        ax.set_facecolor(plt.cm.Blues(0.0))
+        
+        # set plot title
+        header = 'Shape of Final Elite\n'
+        sub_header = 'Case: ' + case_name
+        ax.set_title(header + sub_header, fontsize=18, fontweight='bold')
+
+        # plot lines of generational evolution data
+        # max distance line
+        ax.plot(x_values, y_values, '-o', color = plt.cm.Reds(0.3), marker='*', markersize=8)
+
+        # set plot lables
+        ax.set_xlabel("Generation Number", fontsize=16)
+        ax.set_ylabel("Distance Covered", fontsize=16)
+
+        # draw scatter plot of wheel morphology
+        # plt.plot(x_values, y_values, '-o')
+        
+        # save plot
+        plt.savefig(file_path+"/bes_shape"+".jpg")
+
+        # clear & close the figure, prep for next case
+        plt.clf()
+        plt.close(1)
 
 
-        pass
+
+        
+        
+
+
+
+        # # hide right and top borders
+        # ax.spines['right'].set_visible(False)
+        # ax.spines['top'].set_visible(False)
+
+        # # hide axis tick marks
+        # ax.yaxis.set_ticks_position('none')
+        # ax.xaxis.set_ticks_position('none')
+
+        # # set legends
+        # ax.legend(['max distance', 'mean distance', 'mean trend'])
+
+
 
 

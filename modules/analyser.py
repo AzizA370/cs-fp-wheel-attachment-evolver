@@ -88,8 +88,16 @@ class Analyser:
         elite_csv_dir = case_folder_path + 'elites_CSVs'
         self.elites_to_csv(elite_csv_dir)
 
-        # 4. draw wheel final elite
-        self.draw_best_shape(case_plots_dir, case_name)
+        # 4. draw wheel 3 shape for elites
+        
+        # initial elite
+        self.draw_best_shape(case_plots_dir, case_name, 0)
+        
+        # half way elite
+        self.draw_best_shape(case_plots_dir, case_name, round(len(self.case_run_data)/2))
+
+        # final elite
+        self.draw_best_shape(case_plots_dir, case_name, len(self.case_run_data)-1)
 
         # after performing analys, reset stored case data,
         # in preperatin for next case to be analysed
@@ -140,9 +148,9 @@ class Analyser:
 
         # plot lines of generational evolution data
         # max distance line
-        ax.plot(generations, max_dist, color = plt.cm.Reds(0.3), marker='*', markersize=8)
+        ax.plot(generations, max_dist, color = plt.cm.Reds(0.3), marker='*', markersize=7)
         # max distance line
-        ax.plot(generations, mean_dist, color = plt.cm.cool(0.3), marker='o', markersize=8)
+        ax.plot(generations, mean_dist, color = plt.cm.cool(0.3), marker='o', markersize=7)
         # mean trend line
         ax.plot(generations, trend(generations), color = plt.cm.cool(0.6), linestyle='dashed')
 
@@ -208,10 +216,10 @@ class Analyser:
             genome.Genome.to_csv(elite_dna, path_to_file)
 
     # method used to draw the shape (morphology) of final elite individual
-    def draw_best_shape(self, file_path, case_name):
+    def draw_best_shape(self, file_path, case_name, shape_ind):
         
         # get elite dna
-        elite_dna = self.case_run_data[-1]['elite_dna']
+        elite_dna = self.case_run_data[shape_ind]['elite_dna']
 
         # generate graphic of connected vertices around a core
        
@@ -236,13 +244,14 @@ class Analyser:
         y_values.append(y_values[0])
         
         # create figure and set its size and style
-        fig, ax = plt.subplots(figsize=(5,5), facecolor=plt.cm.Blues(.2))
+        fig, ax = plt.subplots(figsize=(3,3), facecolor=plt.cm.Blues(.2))
         ax.set_facecolor(plt.cm.Blues(0.0))
         
         # set plot title
-        header = 'Evolved Attatchemnt Shape\n'
-        sub_header = 'Case: ' + case_name
-        ax.set_title(header + sub_header, fontsize=18, fontweight='normal')
+        header = 'Evolved Shape, Gen#' + str(shape_ind+1)
+        sub_header = '\ncase: ' + case_name
+
+        ax.set_title(header + sub_header, fontsize=13, fontweight='normal')
 
         # plot lines of generational evolution data
         # max distance line
@@ -253,22 +262,11 @@ class Analyser:
         ax.set_xlabel("x", fontsize=13)
         ax.set_ylabel("y", fontsize=13)
 
-        dist_travelled = self.case_run_data[-1]['max_dist']
-        ver_num = len(elite_dna)
-        footer_str = "Distance climbed: " + str(dist_travelled)
-        # set figure footer
-        ax.annotate(footer_str,
-            xy = (0.5, -0.21),
-            xycoords='axes fraction',
-            ha='center',
-            va="center",
-            fontsize=12)
-
         # set figure layout
         fig.tight_layout()
     
         # save plot
-        plt.savefig(file_path+"/best_shape"+".jpg")
+        plt.savefig(file_path+"/best_shape"+str(shape_ind)+".jpg")
 
         # clear & close the figure, prep for next case
         plt.clf()

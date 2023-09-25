@@ -282,3 +282,23 @@ class Genome():
             if len(gene) > 0:
                 dna.append(gene)
         return dna
+
+    # static method used to apply the suite of mutations to a given dna
+    # before retuning it
+    @staticmethod
+    def apply_mutations(dna, mute_rate, mute_amount, subset_ratio):
+        # perfrom dna point mutate
+        dna = Genome.point_mutate(dna, rate=mute_rate, amount=mute_amount)
+        # perfrom dna shrink mutate
+        dna = Genome.shrink_mutate(dna, rate=mute_rate)
+        # perfrom dna grow mutate
+        dna = Genome.grow_mutate(dna, rate=mute_rate)
+        # perfrom dna swap mutate
+        dna = Genome.swap_mutate(dna, rate=mute_rate)
+        # perfrom dna scramble mutate
+        dna = Genome.scramble_mutate(dna, rate=mute_rate, subset_ratio=subset_ratio)
+        # perfrom dna scramble mutate
+        dna = Genome.invert_mutate(dna, rate=mute_rate, subset_ratio=subset_ratio)
+
+        return dna
+

@@ -119,7 +119,7 @@ class AttachmentTest (unittest.TestCase):
             elite_genome.append([random.random(), random.random()])
         anl.store_gen_data([6, 55, 17], [13, 8, 8], elite_genome)
         file_path = '../cases_analytics/test_case/test_plots'
-        anl.draw_best_shape(file_path, 'test_case')
+        anl.draw_best_shape(file_path, 'test_case', 0)
         self.assertTrue(os.path.exists(file_path))
 
 unittest.main()
